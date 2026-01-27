@@ -1,0 +1,108 @@
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: controlplane0-nmstate
+  labels:
+    agent-install.openshift.io/bmh: controlplane0.ocp4.pharriso.co.uk
+    infraenvs.agent-install.openshift.io: ocp4
+    nmstate-label: ocp4
+  namespace: ocp4
+spec:
+  config:
+    dns-resolver:
+      config:
+        server:
+        - 192.168.50.1
+    interfaces:
+    - ipv4:
+        address:
+        - ip: 192.168.50.10
+          prefix-length: 24
+        dhcp: false
+        enabled: true
+      mac-address: 52:54:00:c9:e9:10
+      name: enp1s0
+      state: up
+      type: ethernet
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 192.168.50.1
+        next-hop-interface: enp1s0
+        table-id: 254
+  interfaces:
+  - macAddress: 52:54:00:c9:e9:10
+    name: enp1s0
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: controlplane1-nmstate
+  labels:
+    agent-install.openshift.io/bmh: controlplane1.ocp4.pharriso.co.uk
+    infraenvs.agent-install.openshift.io: ocp4
+    nmstate-label: ocp4
+  namespace: ocp4
+spec:
+  config:
+    dns-resolver:
+      config:
+        server:
+        - 192.168.50.1
+    interfaces:
+    - ipv4:
+        address:
+        - ip: 192.168.50.11
+          prefix-length: 24
+        dhcp: false
+        enabled: true
+      mac-address: 52:54:00:c9:e9:11
+      name: enp1s0
+      state: up
+      type: ethernet
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 192.168.50.1
+        next-hop-interface: enp1s0
+        table-id: 254
+  interfaces:
+  - macAddress: 52:54:00:c9:e9:11
+    name: enp1s0
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: controlplane2-nmstate
+  labels:
+    agent-install.openshift.io/bmh: controlplane2.ocp4.pharriso.co.uk
+    infraenvs.agent-install.openshift.io: ocp4
+    nmstate-label: ocp4
+  namespace: ocp4
+spec:
+  config:
+    dns-resolver:
+      config:
+        server:
+        - 192.168.50.1
+    interfaces:
+    - ipv4:
+        address:
+        - ip: 192.168.50.12
+          prefix-length: 24
+        dhcp: false
+        enabled: true
+      mac-address: 52:54:00:c9:e9:12
+      name: enp1s0
+      state: up
+      type: ethernet
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 192.168.50.1
+        next-hop-interface: enp1s0
+        table-id: 254
+  interfaces:
+  - macAddress: 52:54:00:c9:e9:12
+    name: enp1s0

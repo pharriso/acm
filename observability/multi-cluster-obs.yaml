@@ -1,0 +1,78 @@
+apiVersion: observability.open-cluster-management.io/v1beta2
+kind: MultiClusterObservability
+metadata:
+  name: observability
+spec:
+  availabilityConfig: Basic
+  retentionResolution1h: 7d
+  retentionResolution5m: 7d
+  observabilityAddonSpec:
+    enableMetrics: true
+  storageConfig:
+    metricObjectStorage:
+      name: thanos-object-storage
+      key: thanos.yaml
+    storageClass: lvms-vg1
+    alertmanagerStorageSize: 1Gi
+    compactStorageSize: 1Gi
+    receiveStorageSize: 1Gi
+    ruleStorageSize: 1Gi
+    storeStorageSize: 1Gi
+  advanced:
+    alertmanager:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 4m
+          memory: 64Mi
+    grafana:
+      replicas: 1
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 4m
+          memory: 64Mi
+    observatoriumAPI:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 20m
+          memory: 64Mi
+    query:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+    queryFrontend:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+    queryFrontendMemcached:
+      replicas: 1
+    rbacQueryProxy:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 4m
+          memory: 64Mi
+    receive:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+    rule:
+      replicas: 1
+    store:
+      replicas: 1
+    storeMemcached:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 45m
+          memory: 64Mi

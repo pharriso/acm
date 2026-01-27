@@ -1,0 +1,92 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/description: ""
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+    name: htpasswd-auth-policy
+    namespace: open-cluster-management-global-set
+spec:
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: htpasswd-auth-policy
+            spec:
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        data:
+                            htpasswd: cGhhcnJpc286JDJ5JDA1JE1aOWdDS2kwUlEyUnFpdzlYb2JUZXU2UDZHQ2VSVnZzcXpvYi9YNk9tQVVidWhkdFBLajJpCnBhdDokMnkkMDUkc1NhRWdEVmNKMlg3ckNWQzZSZzhPLlpNSmxRQmVSalYxQTdVVm9TcXNJSzNxWTE0Ym5yVWEK
+                        kind: Secret
+                        metadata:
+                            name: htpass-secret
+                            namespace: openshift-config
+                        type: Opaque
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: config.openshift.io/v1
+                        kind: OAuth
+                        metadata:
+                            name: cluster
+                        spec:
+                            identityProviders:
+                                - htpasswd:
+                                    fileData:
+                                        name: htpass-secret
+                                  mappingMethod: claim
+                                  name: htpasswd_provider
+                                  type: HTPasswd
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: rbac.authorization.k8s.io/v1
+                        kind: ClusterRoleBinding
+                        metadata:
+                            name: cluster-admin-0
+                        roleRef:
+                            apiGroup: rbac.authorization.k8s.io
+                            kind: ClusterRole
+                            name: cluster-admin
+                        subjects:
+                            - apiGroup: rbac.authorization.k8s.io
+                              kind: User
+                              name: pharriso
+                remediationAction: enforce
+                severity: medium
+    remediationAction: enforce
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+    name: placement-htpasswd-auth-policy
+    namespace: open-cluster-management-global-set
+spec:
+    predicates:
+        - requiredClusterSelector:
+            labelSelector:
+                matchExpressions: []
+    tolerations:
+        - key: cluster.open-cluster-management.io/unavailable
+          operator: Exists
+        - key: cluster.open-cluster-management.io/unreachable
+          operator: Exists
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+    name: binding-htpasswd-auth-policy
+    namespace: open-cluster-management-global-set
+placementRef:
+    apiGroup: cluster.open-cluster-management.io
+    kind: Placement
+    name: placement-htpasswd-auth-policy
+subjects:
+    - apiGroup: policy.open-cluster-management.io
+      kind: Policy
+      name: htpasswd-auth-policy

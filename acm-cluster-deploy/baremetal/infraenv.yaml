@@ -1,0 +1,48 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: pullsecret-ocp4
+  namespace: ocp4
+data:
+  '.dockerconfigjson': ''
+type: 'kubernetes.io/dockerconfigjson'
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: ocp4
+  namespace: ocp4
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: swad
+    networkType: static
+spec:
+  agentLabels:
+    'agentclusterinstalls.extensions.hive.openshift.io/location': swad
+  pullSecretRef:
+    name: pullsecret-ocp4
+  sshAuthorizedKey: 
+  additionalNTPSources:
+    - ntp1.hetzner.de
+    - ntp2.hetzner.com
+    - ntp3.hetzner.net
+  nmStateConfigLabelSelector:	
+      matchLabels:	
+        infraenvs.agent-install.openshift.io: ocp4
+  cpuArchitecture: x86_64
+status:
+  agentLabelSelector:
+    matchLabels:
+      'agentclusterinstalls.extensions.hive.openshift.io/location': swad
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: capi-provider-role
+  namespace: ocp4
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - agent-install.openshift.io
+    resources:
+      - agents

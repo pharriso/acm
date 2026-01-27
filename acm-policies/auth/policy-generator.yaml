@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: httpasswd-auth
+policyDefaults:
+  namespace: open-cluster-management-global-set
+  severity: medium
+  remediationAction: enforce
+  complianceType: musthave
+policies:
+  - name: htpasswd-auth-policy
+    manifests:
+      - path: manifests

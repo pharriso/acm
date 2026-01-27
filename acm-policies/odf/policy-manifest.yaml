@@ -1,0 +1,147 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/description: ""
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+    name: odf-storage-policy
+    namespace: default
+spec:
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: odf-storage-policy
+            spec:
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: Namespace
+                        metadata:
+                            annotations:
+                                openshift.io/node-selector: node-role.kubernetes.io/worker=
+                            name: openshift-storage
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1
+                        kind: OperatorGroup
+                        metadata:
+                            name: openshift-storage-operatorgroup
+                            namespace: openshift-storage
+                        spec:
+                            targetNamespaces:
+                                - openshift-storage
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: ocs.openshift.io/v1
+                        kind: StorageCluster
+                        metadata:
+                            name: ocs-storagecluster
+                            namespace: openshift-storage
+                        spec:
+                            managedResources:
+                                cephBlockPools:
+                                    defaultStorageClass: true
+                                    defaultVirtualizationStorageClass: true
+                                cephFilesystems:
+                                    reconcileStrategy: manage
+                                cephObjectStores:
+                                    reconcileStrategy: manage
+                            monDataDirHostPath: /var/lib/rook
+                            multiCloudGateway:
+                                endpoints:
+                                    maxCount: 2
+                                    minCount: 1
+                                reconcileStrategy: ignore
+                            resources:
+                                mds:
+                                    limits:
+                                        cpu: "3"
+                                        memory: 8Gi
+                                    requests:
+                                        cpu: 200m
+                                        memory: 250Mi
+                                rgw:
+                                    limits:
+                                        cpu: "3"
+                                        memory: 8Gi
+                                    requests:
+                                        cpu: 200m
+                                        memory: 250Mi
+                            storageDeviceSets:
+                                - config: {}
+                                  count: 1
+                                  dataPVCTemplate:
+                                    metadata: {}
+                                    spec:
+                                        accessModes:
+                                            - ReadWriteOnce
+                                        resources:
+                                            requests:
+                                                storage: 100Gi
+                                        storageClassName: localblock
+                                        volumeMode: Block
+                                    status: {}
+                                  name: ocs-deviceset
+                                  placement: {}
+                                  preparePlacement: {}
+                                  replica: 3
+                                  resources:
+                                    limits:
+                                        cpu: "2"
+                                        memory: 5Gi
+                                    requests:
+                                        cpu: 200m
+                                        memory: 250Mi
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1alpha1
+                        kind: Subscription
+                        metadata:
+                            name: odf-operator
+                            namespace: openshift-storage
+                        spec:
+                            channel: stable-4.20
+                            installPlanApproval: Automatic
+                            name: odf-operator
+                            source: redhat-operators
+                            sourceNamespace: openshift-marketplace
+                remediationAction: enforce
+                severity: high
+    remediationAction: enforce
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+    name: placement-odf-storage-policy
+    namespace: default
+spec:
+    predicates:
+        - requiredClusterSelector:
+            labelSelector:
+                matchExpressions: []
+    tolerations:
+        - key: cluster.open-cluster-management.io/unavailable
+          operator: Exists
+        - key: cluster.open-cluster-management.io/unreachable
+          operator: Exists
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+    name: binding-odf-storage-policy
+    namespace: default
+placementRef:
+    apiGroup: cluster.open-cluster-management.io
+    kind: Placement
+    name: placement-odf-storage-policy
+subjects:
+    - apiGroup: policy.open-cluster-management.io
+      kind: Policy
+      name: odf-storage-policy

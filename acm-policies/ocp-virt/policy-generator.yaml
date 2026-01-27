@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: ocp-virt
+policyDefaults:
+  namespace: default
+  severity: high
+  remediationAction: enforce
+  complianceType: musthave
+policies:
+  - name: ocp-virt-policy
+    manifests:
+      - path: manifests

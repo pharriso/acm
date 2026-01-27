@@ -1,0 +1,153 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/description: ""
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+    name: local-storage-policy
+    namespace: default
+spec:
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: local-storage-policy
+            spec:
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: Node
+                        metadata:
+                            labels:
+                                cluster.ocs.openshift.io/openshift-storage: ""
+                            name: controlplane0.ocp4.pharriso.co.uk
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: Node
+                        metadata:
+                            labels:
+                                cluster.ocs.openshift.io/openshift-storage: ""
+                            name: controlplane1.ocp4.pharriso.co.uk
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: Node
+                        metadata:
+                            labels:
+                                cluster.ocs.openshift.io/openshift-storage: ""
+                            name: controlplane2.ocp4.pharriso.co.uk
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: local.storage.openshift.io/v1alpha1
+                        kind: LocalVolumeSet
+                        metadata:
+                            annotations:
+                                argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+                                argocd.argoproj.io/sync-wave: "6"
+                            name: local-block
+                            namespace: openshift-local-storage
+                        spec:
+                            deviceInclusionSpec:
+                                deviceTypes:
+                                    - disk
+                            maxDeviceCount: 1
+                            nodeSelector:
+                                nodeSelectorTerms:
+                                    - matchExpressions:
+                                        - key: cluster.ocs.openshift.io/openshift-storage
+                                          operator: In
+                                          values:
+                                            - ""
+                            storageClassName: localblock
+                            volumeMode: Block
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: Namespace
+                        metadata:
+                            annotations:
+                                argocd.argoproj.io/sync-wave: "0"
+                                openshift.io/node-selector: ""
+                            name: openshift-local-storage
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1
+                        kind: OperatorGroup
+                        metadata:
+                            annotations:
+                                argocd.argoproj.io/sync-wave: "4"
+                            name: local-operator-group
+                            namespace: openshift-local-storage
+                        spec:
+                            targetNamespaces:
+                                - openshift-local-storage
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1alpha1
+                        kind: Subscription
+                        metadata:
+                            annotations:
+                                argocd.argoproj.io/sync-wave: "5"
+                            name: local-storage-operator
+                            namespace: openshift-local-storage
+                        spec:
+                            channel: stable
+                            installPlanApproval: Automatic
+                            name: local-storage-operator
+                            source: redhat-operators
+                            sourceNamespace: openshift-marketplace
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: local.storage.openshift.io/v1alpha1
+                        kind: LocalVolumeDiscovery
+                        metadata:
+                            name: auto-discover-devices
+                            namespace: openshift-local-storage
+                        spec:
+                            nodeSelector:
+                                nodeSelectorTerms:
+                                    - matchExpressions:
+                                        - key: cluster.ocs.openshift.io/openshift-storage
+                                          operator: In
+                                          values:
+                                            - ""
+                remediationAction: enforce
+                severity: high
+    remediationAction: enforce
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+    name: placement-local-storage-policy
+    namespace: default
+spec:
+    predicates:
+        - requiredClusterSelector:
+            labelSelector:
+                matchExpressions: []
+    tolerations:
+        - key: cluster.open-cluster-management.io/unavailable
+          operator: Exists
+        - key: cluster.open-cluster-management.io/unreachable
+          operator: Exists
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+    name: binding-local-storage-policy
+    namespace: default
+placementRef:
+    apiGroup: cluster.open-cluster-management.io
+    kind: Placement
+    name: placement-local-storage-policy
+subjects:
+    - apiGroup: policy.open-cluster-management.io
+      kind: Policy
+      name: local-storage-policy

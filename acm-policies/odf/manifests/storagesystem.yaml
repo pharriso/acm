@@ -1,0 +1,60 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  name: ocs-storagecluster
+  namespace: openshift-storage
+spec:
+  multiCloudGateway:
+    reconcileStrategy: ignore # <- Set this to ignore (disable) or manage (enable) Multicloud Object Gateway
+    endpoints:
+      minCount: 1
+      maxCount: 2
+  managedResources: 
+    cephBlockPools:
+      defaultStorageClass: true
+      defaultVirtualizationStorageClass: true
+    cephFilesystems:
+      reconcileStrategy: manage # <- Set this to ignore (disable) or manage (enable) Ceph Filesystem
+    cephObjectStores:
+      reconcileStrategy: manage # <- Set this to ignore (disable) or manage (enable) Ceph RGW
+  resources:
+   mds:
+     limits:
+       cpu: "3"
+       memory: "8Gi"
+     requests:
+       cpu: "200m"
+       memory: "250Mi"
+   rgw:
+     limits:
+       cpu: "3"
+       memory: "8Gi"
+     requests:
+       cpu: "200m"
+       memory: "250Mi"
+  monDataDirHostPath: /var/lib/rook
+  storageDeviceSets:
+  - config: {}
+    count: 1
+    dataPVCTemplate:
+      metadata: {}
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: "100Gi"
+        storageClassName: localblock
+        volumeMode: Block
+      status: {}
+    name: ocs-deviceset
+    placement: {}
+    preparePlacement: {}
+    replica: 3
+    resources:
+     limits:
+       cpu: "2"
+       memory: "5Gi"
+     requests:
+       cpu: "200m"
+       memory: "250Mi"

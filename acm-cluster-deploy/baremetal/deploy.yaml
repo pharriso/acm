@@ -1,0 +1,104 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: ocp4
+  namespace: ocp4
+  labels:
+    cluster.open-cluster-management.io/clusterset: managed
+    hive.openshift.io/cluster-platform: agent-baremetal
+spec:
+  platform:
+    agentBareMetal:
+      agentSelector: {}
+  clusterName: ocp4
+  baseDomain: pharriso.co.uk
+  pullSecretRef:
+    name: pullsecret-cluster-ocp4
+  clusterInstallRef:
+    kind: AgentClusterInstall
+    name: ocp4
+    version: v1beta1
+    group: extensions.hive.openshift.io
+  controlPlaneConfig:
+    servingCertificates: {}
+  installed: false
+
+---
+apiVersion: extensions.hive.openshift.io/v1beta1
+kind: AgentClusterInstall
+metadata:
+  name: ocp4
+  namespace: ocp4
+spec:
+  clusterDeploymentRef:
+    name: ocp4
+  holdInstallation: true
+  imageSetRef:
+    name: img4.20.10-multi-appsub
+  networking:
+    networkType: OVNKubernetes
+    clusterNetwork:
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
+    serviceNetwork:
+      - 172.30.0.0/16
+    userManagedNetworking: false
+  platformType: BareMetal
+  provisionRequirements:
+    controlPlaneAgents: 3
+  sshPublicKey: >-
+    ssh-rsa
+  apiVIP: 192.168.50.16
+  ingressVIP: 192.168.50.17
+
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: pullsecret-cluster-ocp4
+  namespace: ocp4
+  labels:
+    agent-install.openshift.io/watch: 'true'
+    cluster.open-cluster-management.io/backup: cluster
+data:
+  .dockerconfigjson: >-
+type: kubernetes.io/dockerconfigjson
+
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: ocp4
+  labels:
+    cloud: BareMetal
+    cluster.open-cluster-management.io/clusterset: managed
+    name: ocp4
+    vendor: OpenShift
+spec:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
+  taints:
+    - effect: NoSelect
+      key: cluster.open-cluster-management.io/unreachable
+
+---
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: ocp4
+  namespace: ocp4
+spec:
+  applicationManager:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  clusterLabels:
+    cloud: BareMetal
+    vendor: OpenShift
+  clusterName: ocp4
+  clusterNamespace: ocp4
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+

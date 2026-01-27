@@ -1,0 +1,69 @@
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  annotations:
+    bmac.agent-install.openshift.io/hostname: controlplane0.ocp4.pharriso.co.uk
+    inspect.metal3.io: disabled
+  labels:
+    infraenvs.agent-install.openshift.io: ocp4
+  name: controlplane0.ocp4.pharriso.co.uk
+  namespace: ocp4
+spec:
+  automatedCleaningMode: disabled
+  bmc:
+    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/7b062e55-fa16-4fbf-bf87-42e80a16b694
+    credentialsName: bmc-nodes
+    disableCertificateVerification: true
+  bootMACAddress: 52:54:00:c9:e9:10
+  rootDeviceHints:
+    deviceName: /dev/vda
+  customDeploy:
+    method: start_assisted_install
+  online: true
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  annotations:
+    bmac.agent-install.openshift.io/hostname: controlplane1.ocp4.pharriso.co.uk
+    inspect.metal3.io: disabled
+  labels:
+    infraenvs.agent-install.openshift.io: ocp4
+  name: controlplane1.ocp4.pharriso.co.uk
+  namespace: ocp4
+spec:
+  automatedCleaningMode: disabled
+  bmc:
+    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/abc45f90-966b-4319-bc03-7f4e6ea946d8
+    credentialsName: bmc-nodes
+    disableCertificateVerification: true
+  bootMACAddress: 52:54:00:c9:e9:11
+  rootDeviceHints:
+    deviceName: /dev/vda
+  customDeploy:
+    method: start_assisted_install
+  online: true
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  annotations:
+    bmac.agent-install.openshift.io/hostname: controlplane2.ocp4.pharriso.co.uk
+    inspect.metal3.io: disabled
+  labels:
+    infraenvs.agent-install.openshift.io: ocp4
+  name: controlplane2.ocp4.pharriso.co.uk
+  namespace: ocp4
+spec:
+  automatedCleaningMode: disabled
+  bmc:
+    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/2857328f-172f-4277-a730-d4fa92ef697e
+    credentialsName: bmc-nodes
+    disableCertificateVerification: true
+  bootMACAddress: 52:54:00:c9:e9:12
+  rootDeviceHints:
+    deviceName: /dev/vda
+  customDeploy:
+    method: start_assisted_install
+  online: true
