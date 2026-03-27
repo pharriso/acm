@@ -1,0 +1,22 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: ConfigurationPolicy
+metadata:
+  name: vm-rhel9
+spec:
+  remediationAction: inform
+  severity: low
+  object-templates-raw: |
+    {{- /* find Portworx pods in terminated state */ -}}
+    {{- range $pp := (lookup "v1" "Pod" "portworx" "").items }}
+      {{- /* if the pod is blocked because it is in node shutdown we should delete the pod */ -}}
+      {{- if and (eq $pp.status.phase "Failed") 
+                 (contains "kvdb" $pp.metadata.name) }}
+    - complianceType: mustnothave
+      objectDefinition:
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: {{ $pp.metadata.name }}
+          namespace: {{ $pp.metadata.namespace }}
+      {{- end }}
+    {{- end }}

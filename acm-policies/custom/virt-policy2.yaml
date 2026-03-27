@@ -1,0 +1,32 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  annotations:
+  name: find-rhel9-vms
+  namespace: default
+spec:
+  disabled: false
+  remediationAction: inform
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: rhel9-vm-finder
+        spec:
+          remediationAction: inform
+          severity: low
+          object-templates-raw: |
+            {{- /* 1. Iterate over all VirtualMachines across all namespaces */ -}}
+            {{- range (lookup "kubevirt.io/v1" "VirtualMachine" "" "").items }}
+              {{- if (eq .status.printableStatus "Running") }}
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: kubevirt.io/v1
+                kind: VirtualMachine
+                metadata:
+                  name: {{ .metadata.name }}
+                  namespace: {{ .metadata.namespace }}
+              {{- end }}
+            {{- end }}

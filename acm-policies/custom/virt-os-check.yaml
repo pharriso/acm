@@ -1,0 +1,36 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-vm-os-whitelist
+  namespace: default
+spec:
+  remediationAction: inform
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: check-approved-os-list
+        spec:
+          remediationAction: inform # Set to inform to audit, or enforce to try and correct
+          severity: high
+          object-templates-raw: |
+            {{- range (lookup "kubevirt.io/v1" "VirtualMachineInstance" "" "").items }}
+              {{- if (eq .status.printableStatus "Running") }}
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: kubevirt.io/v1
+                kind: VirtualMachineInstance
+                metadata:
+                  name: {{ .metadata.name }}
+                  namespace: {{ .metadata.namespace }}
+              {{- end }}
+            {{- end }}
+                apiVersion: kubevirt.io/v1
+                status:
+                  guestOSInfo:
+                    prettyName:
+                    # The value below uses a Regex 'OR' operator (|) 
+                    # to match any of the approved OS versions.
+                    os.template.kubevirt.io/os-name: '^(Red Hat Enterprise Linux 9| Red Hat Enterprise Linux 8)$'

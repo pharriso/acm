@@ -32,6 +32,20 @@ spec:
      requests:
        cpu: "200m"
        memory: "250Mi"
+   mon:
+     limits:
+       cpu: "3"
+       memory: "8Gi"
+     requests:
+       cpu: "200m"
+       memory: "250Mi"
+   mgr:
+     limits:
+       cpu: "3"
+       memory: "8Gi"
+     requests:
+       cpu: "200m"
+       memory: "250Mi"
   monDataDirHostPath: /var/lib/rook
   storageDeviceSets:
   - config: {}

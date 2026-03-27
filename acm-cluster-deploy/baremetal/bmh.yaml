@@ -4,6 +4,7 @@ kind: BareMetalHost
 metadata:
   annotations:
     bmac.agent-install.openshift.io/hostname: controlplane0.ocp4.pharriso.co.uk
+    bmac.agent-install.openshift.io.agent-label.iam-special: very-special
     inspect.metal3.io: disabled
   labels:
     infraenvs.agent-install.openshift.io: ocp4
@@ -12,7 +13,7 @@ metadata:
 spec:
   automatedCleaningMode: disabled
   bmc:
-    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/7b062e55-fa16-4fbf-bf87-42e80a16b694
+    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/fa211b26-e5bb-4604-a011-ec287d8ed7db
     credentialsName: bmc-nodes
     disableCertificateVerification: true
   bootMACAddress: 52:54:00:c9:e9:10
@@ -35,7 +36,7 @@ metadata:
 spec:
   automatedCleaningMode: disabled
   bmc:
-    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/abc45f90-966b-4319-bc03-7f4e6ea946d8
+    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/1fa24281-3a5b-483a-bb20-f5ad97b9db96
     credentialsName: bmc-nodes
     disableCertificateVerification: true
   bootMACAddress: 52:54:00:c9:e9:11
@@ -58,7 +59,7 @@ metadata:
 spec:
   automatedCleaningMode: disabled
   bmc:
-    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/2857328f-172f-4277-a730-d4fa92ef697e
+    address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/f4f209ed-781e-4682-ac7a-edd5169cce6b
     credentialsName: bmc-nodes
     disableCertificateVerification: true
   bootMACAddress: 52:54:00:c9:e9:12

@@ -1,0 +1,34 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: kubevirt-operator-health
+  namespace: default
+spec:
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: kubevirt-operator-health
+      spec:
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: operators.coreos.com/v1alpha1
+            kind: Subscription
+            metadata:
+              namespace: openshift-cnv
+              name: hco-operatorhub
+            status:
+              state: AtLatestKnown
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: hco.kubevirt.io/v1beta1
+            kind: HyperConverged
+            metadata:
+              namespace: openshift-cnv
+            status:
+              systemHealthStatus: healthy
+        remediationAction: inform
+        severity: high

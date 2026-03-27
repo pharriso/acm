@@ -1,0 +1,119 @@
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  name: 'ocp4'
+  namespace: 'ocp4'
+  labels:
+spec:
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.20.14-multi
+  pullSecret:
+    name: pullsecret-cluster-ocp4
+  sshKey:
+    name: sshkey-cluster-ocp4
+  networking:
+    clusterNetwork:
+      - cidr: 10.132.0.0/14
+    serviceNetwork:
+      - cidr: 172.31.0.0/16
+    networkType: OVNKubernetes
+  controllerAvailabilityPolicy: SingleReplica
+  infrastructureAvailabilityPolicy: SingleReplica
+  olmCatalogPlacement: guest
+  platform:
+    type: Agent
+    agent:
+      agentNamespace: 'ocp4'
+  infraID: 'ocp4'
+  dns:
+    baseDomain: 'pharriso.co.uk'
+  services:
+  - service: APIServer
+    servicePublishingStrategy:
+      type: LoadBalancer
+  - service: OAuthServer
+    servicePublishingStrategy:
+      type: Route
+  - service: OIDC
+    servicePublishingStrategy:
+      type: Route
+  - service: Konnectivity
+    servicePublishingStrategy:
+      type: Route
+  - service: Ignition
+    servicePublishingStrategy:
+      type: Route
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pullsecret-cluster-ocp4
+  namespace: ocp4
+data:
+  '.dockerconfigjson': 
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sshkey-cluster-ocp4
+  namespace: 'ocp4'
+stringData:
+  id_rsa.pub: 
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: 'nodepool-ocp4-1'
+  namespace: 'ocp4'
+spec:
+  clusterName: 'ocp4'
+  replicas: 1
+  management:
+    autoRepair: false
+    upgradeType: InPlace
+  platform:
+    type: Agent
+    agent:
+      agentLabelSelector:
+        matchLabels:
+          'iam-special': 'very-special'
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.20.14-multi
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  annotations:
+    import.open-cluster-management.io/hosting-cluster-name: local-cluster 
+    import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
+    open-cluster-management/created-via: hypershift
+  labels:
+    cloud: BareMetal
+    vendor: OpenShift
+    name: 'ocp4'
+  name: 'ocp4'
+spec:
+  hubAcceptsClient: true
+---
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: 'ocp4'
+  namespace: 'ocp4'
+spec:
+  clusterName: 'ocp4'
+  clusterNamespace: 'ocp4'
+  clusterLabels:
+    cloud: BareMetal
+    vendor: OpenShift
+  applicationManager:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+---
