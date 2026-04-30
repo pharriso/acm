@@ -1,0 +1,15 @@
+hcp create cluster kubevirt \
+  --name cluster2 \
+  --node-pool-replicas 2 \
+  --pull-secret /root/pull-secret.json \
+  --ssh-key /root/.ssh/id_rsa.pub \
+  --base-domain pharriso.co.uk \
+  --memory 8Gi \
+  --cores 2 \
+  --infra-namespace=hosted-vms \
+  --infra-availability-policy HighlyAvailable \
+  --control-plane-availability-policy SingleReplica \
+  --infra-kubeconfig-file=/root/virt-sa-kubeconfig \
+  --etcd-storage-class=lvms-vg1 \
+  --release-image quay.io/openshift-release-dev/ocp-release:4.20.18-multi \
+  --render-sensitive --render > hcp_deploy_virt.yaml

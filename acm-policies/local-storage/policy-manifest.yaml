@@ -26,7 +26,7 @@ spec:
                         metadata:
                             labels:
                                 cluster.ocs.openshift.io/openshift-storage: ""
-                            name: controlplane0.ocp4.pharriso.co.uk
+                            name: controlplane0
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: v1
@@ -34,7 +34,7 @@ spec:
                         metadata:
                             labels:
                                 cluster.ocs.openshift.io/openshift-storage: ""
-                            name: controlplane1.ocp4.pharriso.co.uk
+                            name: controlplane1
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: v1
@@ -42,7 +42,7 @@ spec:
                         metadata:
                             labels:
                                 cluster.ocs.openshift.io/openshift-storage: ""
-                            name: controlplane2.ocp4.pharriso.co.uk
+                            name: controlplane2
                     - complianceType: musthave
                       objectDefinition:
                         apiVersion: local.storage.openshift.io/v1alpha1

@@ -3,18 +3,18 @@ kind: Node
 metadata:
   labels:
     cluster.ocs.openshift.io/openshift-storage: ""
-  name: controlplane0.ocp4.pharriso.co.uk
+  name: controlplane0
 ---
 apiVersion: v1
 kind: Node
 metadata:
   labels:
     cluster.ocs.openshift.io/openshift-storage: ""
-  name: controlplane1.ocp4.pharriso.co.uk
+  name: controlplane1
 ---
 apiVersion: v1
 kind: Node
 metadata:
   labels:
     cluster.ocs.openshift.io/openshift-storage: ""
-  name: controlplane2.ocp4.pharriso.co.uk
+  name: controlplane2
