@@ -125,3 +125,7 @@ This env file is then included in the systemd files for the relevant services. F
 /etc/systemd/system/kubelet.service.d contains the env file to include /etc/mco/proxy.env
 
 Also see KCS = https://access.redhat.com/solutions/7090263
+
+## Find release version for HCP
+
+See https://quay.io/repository/openshift-release-dev/ocp-release?tab=tags
