@@ -53,6 +53,12 @@ Host should inspect and become available. For proxy examples, use a different in
 oc apply -f deploy-hcp.yaml
 ```
 
+Bare metal nodes will provision as follows:
+
+* Relevant CoreOS version is written to disk (previously we are running the agent discovery image which can be different)
+* Server reboots and then runs initial config ostree
+* Server reboots again and then criod starts up services like kubelet
+
 ## Get the HCP kubeconfig.
 
 ```
