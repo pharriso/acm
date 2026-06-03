@@ -1,0 +1,147 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: clusters
+spec: {}
+status: {}
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJjbG91ZC5vcGVuc2hpZnQuY29tIjogewogICAgICAiYXV0aCI6ICJiM0JsYm5Ob2FXWjBMWEpsYkdWaGMyVXRaR1YySzI5amJWOWhZMk5sYzNOZk9EVmtaall3WW1JMVltRm1OREEzWXprMk9USTJPRFZpWmpneU5tUmhOR1U2VEVoWFNsTTNSazFTT0ROWFMwWlJOVFpPVlROVE5VSTNXa1ZXU3pSUE1WcERWREJUU1ZsTE9USTRSemhFVTBzMlZVazVTakEyVjBOS1R6aFFRVlZOTkE9PSIsCiAgICAgICJlbWFpbCI6ICJwaGFycmlzb0ByZWRoYXQuY29tIgogICAgfSwKICAgICJxdWF5LmlvIjogewogICAgICAiYXV0aCI6ICJiM0JsYm5Ob2FXWjBMWEpsYkdWaGMyVXRaR1YySzI5amJWOWhZMk5sYzNOZk9EVmtaall3WW1JMVltRm1OREEzWXprMk9USTJPRFZpWmpneU5tUmhOR1U2VEVoWFNsTTNSazFTT0ROWFMwWlJOVFpPVlROVE5VSTNXa1ZXU3pSUE1WcERWREJUU1ZsTE9USTRSemhFVTBzMlZVazVTakEyVjBOS1R6aFFRVlZOTkE9PSIsCiAgICAgICJlbWFpbCI6ICJwaGFycmlzb0ByZWRoYXQuY29tIgogICAgfSwKICAgICJyZWdpc3RyeS5jb25uZWN0LnJlZGhhdC5jb20iOiB7CiAgICAgICJhdXRoIjogImZIVm9ZeTF3YjI5c0xXSTFPV1JtWlRkbUxUSTFZbUV0TkRBM1lpMDRORGd6TFRBNE9XSmhOVGN5TlRsalpUcGxlVXBvWWtkamFVOXBTbE5WZWxWNFRXbEtPUzVsZVVwNlpGZEphVTlwU214TlZGVjVXV3BCTTA1WFVUSk5ha1V3V20xRmVVOVVWbXRaVjBWNlQxUkthRTlVU1RCWmFrVXpXa05LT1M1SmIzazVTVlpXTTNreWVVZFZVbFZUWVhvMk5sTkpSbVkwYTFkdlgwWm5RbEIzYTNOVGFWcHRXSHBJTTJNM2QzQTFRVlZsVm10Q2NUQkxiMGRGT1RSdFRFYzBZek55WDFsNlgzTmtRbkpUYUhONU1GUnJTR1ZhWTFkaVlqZDBUak5QZWpoalRWVlFXbGxUVGpWc1pGQnVWalUzTnpOamN6bG9YMFZJTm0xbGMxbDJOMEpRUzNKNU1sWllSbE14U2xsdldVZHJXR1ZZTTFkaFNEa3lSbmxIZG05bmNtdEtOM000UzFGNU0zTkRTbGgzWkhoVmVGRk5NV0ZxZUhodlUwOW9Sa2hYVFdnNFVqVlJVVGRwUlVrelRGVkhWRVZqV0VsTlRVaFZRMUZtV0ROMU1IVm9WbTVaTnpKeGRXYzRVV0ozYURsc1Z6QmFNMjB6VFZaUlExUm9OVmxqYUVod1RIWjNWVVpTUTI1alQxSlRNbVJPT1hWVE0wOHpWRlF5YVRkRWJHTkpia1JCZEV4RU4yTlRPUzFLYkd3M09XdG5aRGxwUjNKS1kzZ3laMHhCUVhCU1REbFdUWFJaYmxKdFMyVlFkbUZmU2prMGMwTjROa3hoVkdkS05tdFBkMDFPWkhGdFVVNVNUa2xEYlZoc1MwSktlVGhyUm1aek5VTTNTR2xMUkhKaWJqSlpUVmQzYkhKSFJWWkdUbWhLV0hKNU9VTTRUVXQzWVhack5YSm9UamxRVFdSU05qSmlVMGhOVURSQmFqa3lWVVYzUW1sR2FHNVRXR052VWpKbFoxOWpOQzFwYVdsblFqTndRbFUwYldSVU5IVTVVM3BUWTFNMmNWUkxVV1ZETlVaUGFYZHlORWhYVW5KT2JIWjNNMjlJVmkxemFrSnNWVlYzY0hoVFpUTm1WMHBUY25oc1EyZG9iV1V3WkZkTGJERTBZMEpETlVaaFNtUkNXR3B5TFhsRVRGUlZlVTg0ZVRCSGJERTNXakJQVm05WE9VWndVbTUyT1hOaVMyUmlNM1JQYXkxUVZWRTBTMlJsT0Mwd1gwZHhlR1pEVTAwNE5YVldkMjVGY3pkcFJGazNkR2N0U1dKNGNtNVZNRVZxZGtKcU1GazBPVTlhWldSWGJqbE9RV0pGVWpSWFNXMVhPRTE0VDFZNFoxQjNabDltTm0xU1YwNW1VRTFMZGpNMVJqSkhaMnhLYnc9PSIsCiAgICAgICJlbWFpbCI6ICJwaGFycmlzb0ByZWRoYXQuY29tIgogICAgfSwKICAgICJyZWdpc3RyeS5yZWRoYXQuaW8iOiB7CiAgICAgICJhdXRoIjogImZIVm9ZeTF3YjI5c0xXSTFPV1JtWlRkbUxUSTFZbUV0TkRBM1lpMDRORGd6TFRBNE9XSmhOVGN5TlRsalpUcGxlVXBvWWtkamFVOXBTbE5WZWxWNFRXbEtPUzVsZVVwNlpGZEphVTlwU214TlZGVjVXV3BCTTA1WFVUSk5ha1V3V20xRmVVOVVWbXRaVjBWNlQxUkthRTlVU1RCWmFrVXpXa05LT1M1SmIzazVTVlpXTTNreWVVZFZVbFZUWVhvMk5sTkpSbVkwYTFkdlgwWm5RbEIzYTNOVGFWcHRXSHBJTTJNM2QzQTFRVlZsVm10Q2NUQkxiMGRGT1RSdFRFYzBZek55WDFsNlgzTmtRbkpUYUhONU1GUnJTR1ZhWTFkaVlqZDBUak5QZWpoalRWVlFXbGxUVGpWc1pGQnVWalUzTnpOamN6bG9YMFZJTm0xbGMxbDJOMEpRUzNKNU1sWllSbE14U2xsdldVZHJXR1ZZTTFkaFNEa3lSbmxIZG05bmNtdEtOM000UzFGNU0zTkRTbGgzWkhoVmVGRk5NV0ZxZUhodlUwOW9Sa2hYVFdnNFVqVlJVVGRwUlVrelRGVkhWRVZqV0VsTlRVaFZRMUZtV0ROMU1IVm9WbTVaTnpKeGRXYzRVV0ozYURsc1Z6QmFNMjB6VFZaUlExUm9OVmxqYUVod1RIWjNWVVpTUTI1alQxSlRNbVJPT1hWVE0wOHpWRlF5YVRkRWJHTkpia1JCZEV4RU4yTlRPUzFLYkd3M09XdG5aRGxwUjNKS1kzZ3laMHhCUVhCU1REbFdUWFJaYmxKdFMyVlFkbUZmU2prMGMwTjROa3hoVkdkS05tdFBkMDFPWkhGdFVVNVNUa2xEYlZoc1MwSktlVGhyUm1aek5VTTNTR2xMUkhKaWJqSlpUVmQzYkhKSFJWWkdUbWhLV0hKNU9VTTRUVXQzWVhack5YSm9UamxRVFdSU05qSmlVMGhOVURSQmFqa3lWVVYzUW1sR2FHNVRXR052VWpKbFoxOWpOQzFwYVdsblFqTndRbFUwYldSVU5IVTVVM3BUWTFNMmNWUkxVV1ZETlVaUGFYZHlORWhYVW5KT2JIWjNNMjlJVmkxemFrSnNWVlYzY0hoVFpUTm1WMHBUY25oc1EyZG9iV1V3WkZkTGJERTBZMEpETlVaaFNtUkNXR3B5TFhsRVRGUlZlVTg0ZVRCSGJERTNXakJQVm05WE9VWndVbTUyT1hOaVMyUmlNM1JQYXkxUVZWRTBTMlJsT0Mwd1gwZHhlR1pEVTAwNE5YVldkMjVGY3pkcFJGazNkR2N0U1dKNGNtNVZNRVZxZGtKcU1GazBPVTlhWldSWGJqbE9RV0pGVWpSWFNXMVhPRTE0VDFZNFoxQjNabDltTm0xU1YwNW1VRTFMZGpNMVJqSkhaMnhLYnc9PSIsCiAgICAgICJlbWFpbCI6ICJwaGFycmlzb0ByZWRoYXQuY29tIgogICAgfQogIH0KfQo=
+kind: Secret
+metadata:
+  labels:
+    hypershift.openshift.io/safe-to-delete-with-cluster: "true"
+  name: cluster2-pull-secret
+  namespace: clusters
+---
+apiVersion: v1
+data:
+  id_rsa.pub: c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCZ1FEb0Zib1U0ZGhXVGFGL3BKQVBSZHVjMnZ4MTh4WllueFRuODF0RkZqRVdjdUZtZnNCbWtIVlo4MURUY1V4aGdBYUgwYzhlanV6RnJXRnBKUW5VcVdxSDVnQWlKd1U3ektpOGF6RUpDR0g3d2hKMVA2QnRZdnY1OExjQVVZRGtqZW1pUEg1MWdwL09nTS9odlhOVFZ1YzBFbnJ0WlpFUTd6MzBNS2E4RTI4a1lqalFhSnZsSHRxcEtjN25TanpEckdMZmNvR0lacjhiQ0tOcHJSSEd2WDFYeHVLdEYvTFZzQjBRR3BKdGNLbngrTDFnaC90dFYvM252d3c3ZkxrU1czajQweHJOMmdCZHByZ0JXbnY5VHpLdnZPcEJZNUNUSEFBUkx6d2V1UVFVVExBY0FYUUVId1p0MjBNRUYrMnVlTEdRakxXb3E0bjJiSFcvZlhRUlliNnBoSVFVdzFybEtpYVpCbmV6M0ZkRXVTNllQS2ZQZlBKaVlLeFRKVWRmODVTUkdBM1M4eU9ObmE2b1FhTTFQU2Q4SWUrZURzRnphcmZURGJ4Z3kxZ1M0cGJZT0hseW1VbG5XM2drNzA1d0V0ZEdFWXYwUDZtalJBWkpHYjg3bE1SVmtDcXhKa3NUY3Q2WHhzSFFWZXFzVm00UjhsVnNGM0hsaWRTNHNZdUZ0Q3M9IHJvb3RAaGV0ego=
+kind: Secret
+metadata:
+  labels:
+    hypershift.openshift.io/safe-to-delete-with-cluster: "true"
+  name: cluster2-ssh-key
+  namespace: clusters
+---
+apiVersion: v1
+data:
+  kubeconfig: YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIHNlcnZlcjogaHR0cHM6Ly9hcGkub2NwNC5waGFycmlzby5jby51azo2NDQzCiAgbmFtZTogYXBpLW9jcDQtcGhhcnJpc28tY28tdWs6NjQ0Mwpjb250ZXh0czoKLSBjb250ZXh0OgogICAgY2x1c3RlcjogYXBpLW9jcDQtcGhhcnJpc28tY28tdWs6NjQ0MwogICAgbmFtZXNwYWNlOiBkZWZhdWx0CiAgICB1c2VyOiBzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDp2aXJ0LXNhL2FwaS1vY3A0LXBoYXJyaXNvLWNvLXVrOjY0NDMKICBuYW1lOiBkZWZhdWx0L2FwaS1vY3A0LXBoYXJyaXNvLWNvLXVrOjY0NDMvc3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6dmlydC1zYQpjdXJyZW50LWNvbnRleHQ6IGRlZmF1bHQvYXBpLW9jcDQtcGhhcnJpc28tY28tdWs6NjQ0My9zeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDp2aXJ0LXNhCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KdXNlcnM6Ci0gbmFtZTogc3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6dmlydC1zYS9hcGktb2NwNC1waGFycmlzby1jby11azo2NDQzCiAgdXNlcjoKICAgIHRva2VuOiBleUpoYkdjaU9pSlNVekkxTmlJc0ltdHBaQ0k2SW5rd2EyazRNV2d6VEY5MFpIWXpUVEpxV0VndE1uZFNUblo1WkdObWFIVlhlVWRDV2xCaFlVOUVVSE1pZlEuZXlKaGRXUWlPbHNpYUhSMGNITTZMeTlyZFdKbGNtNWxkR1Z6TG1SbFptRjFiSFF1YzNaaklsMHNJbVY0Y0NJNk1UYzNOakkyT0RJd09Dd2lhV0YwSWpveE56YzJNVGd4T0RBNExDSnBjM01pT2lKb2RIUndjem92TDJ0MVltVnlibVYwWlhNdVpHVm1ZWFZzZEM1emRtTWlMQ0pxZEdraU9pSXpNVGd5TWpJM01pMWhOREJoTFRReVpqWXRZV1ZoWXkxbU16UmxOakF6WWpFMU5tUWlMQ0pyZFdKbGNtNWxkR1Z6TG1sdklqcDdJbTVoYldWemNHRmpaU0k2SW1SbFptRjFiSFFpTENKelpYSjJhV05sWVdOamIzVnVkQ0k2ZXlKdVlXMWxJam9pZG1seWRDMXpZU0lzSW5WcFpDSTZJalkwTkRsaFltUXlMVFZrWVdFdE5ESmxOUzA1WVRsbExUVmlaV0V5TlRJMlpEWTFNQ0o5ZlN3aWJtSm1Jam94TnpjMk1UZ3hPREE0TENKemRXSWlPaUp6ZVhOMFpXMDZjMlZ5ZG1salpXRmpZMjkxYm5RNlpHVm1ZWFZzZERwMmFYSjBMWE5oSW4wLmlGVEdrVUFzSXg3aHhIMzluOE44SnpDMkFuOWJlWm54UUNVbVJXVEhMbEpCRWl3U3ZEMUxVTm5wejJVRW9VQUoySy14OVBKZUZxbGR4TS15elRUZ3IwNkh2YTVYSmlzNi1mQW56Qk9SOXFmVmR4Y3NWWDNTMllGcnRXaFlmUTFuUlBPYk9KRjliZEw5U2IxYzdGV2c4eHRMdWpsU2hzVTM5UEFsaHI5Zk1ZTEZzbE92eWJ6Qlp2ZjBPVFRSMW10YTJ3UE9PTXZzYzRZNEV2d1k5ZE5CVXZZRDRlRHlkSGtGaG5XZC16cFVJQ21WTk9TMXpyRTFZZlBCY2JKNUZlMzhPdVpsekl0bi03ckRHMmJPX09sY09wRWhzRWNmaDd6RFl4TmczX0xEZ1c1Q2luc0d0ZnhibE0xNmZ1dHhTU21SYUpQSzVPQ1JUTUxGUFVZV1BLNW4taUgxeElILWVKSGkxX0ZpMzhFX0ZGRHpvOXhRVjgxSElkOVpsSjA2al9pQjNuZUo1eVp5LVFHNWYybG5WWUNMWC1NRHRkM3BjTkhQNlZBeG4xRlR0dlYwNGlrUkRtNkp2Mk9rQzVTb2V3Y2xyTTcwT1hvR2NkMlgxV2lUTGQtUnVIVFJUWllVb2FKQ3hVQm5RUEdiYXBtQVJkVXdweXluVnlRekVaYnU5YzhJMFE4SDhRYmR4NWhYTVpXTDdoazNuUV9PNVdWQ3E4R0pjOHlZcjM2MEo2VDZLQzgycGxfdENIOVlueGdHWnNQcTJJUHBMWGVqRXlRVXN5TXlqX18xTm4wdHN5enY5UjdDLVl1c2VhU2FFMnlXVmo5a2xrMWVsMFdwa3U4Z0RWak1HSkNsODZpWDIzZ0pySjhfa0tJZjFFc2YxYnBPQjNSUVhVNkJBaWg5Zm9zCg==
+kind: Secret
+metadata:
+  labels:
+    hypershift.openshift.io/safe-to-delete-with-cluster: "true"
+  name: cluster2-infra-credentials
+  namespace: clusters
+type: Opaque
+---
+apiVersion: v1
+data:
+  key: ZFoMjHc5J9xbg5k9VpEG9pcZjrv14aC4vSDnkGmtJxQ=
+kind: Secret
+metadata:
+  labels:
+    hypershift.openshift.io/safe-to-delete-with-cluster: "true"
+  name: cluster2-etcd-encryption-key
+  namespace: clusters
+type: Opaque
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  name: cluster2
+  namespace: clusters
+spec:
+  autoscaling: {}
+  capabilities: {}
+  configuration: {}
+  controllerAvailabilityPolicy: SingleReplica
+  dns:
+    baseDomain: pharriso.co.uk
+  etcd:
+    managed:
+      storage:
+        persistentVolume:
+          size: 8Gi
+          storageClassName: lvms-vg1
+        type: PersistentVolume
+    managementType: Managed
+  fips: false
+  infraID: cluster2-r4n7n
+  infrastructureAvailabilityPolicy: HighlyAvailable
+  networking:
+    clusterNetwork:
+    - cidr: 10.132.0.0/14
+    networkType: OVNKubernetes
+    serviceNetwork:
+    - cidr: 172.31.0.0/16
+  olmCatalogPlacement: management
+  platform:
+    kubevirt:
+      credentials:
+        infraKubeConfigSecret:
+          key: kubeconfig
+          name: cluster2-infra-credentials
+        infraNamespace: hosted-vms
+    type: KubeVirt
+  pullSecret:
+    name: cluster2-pull-secret
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.20.18-multi
+  secretEncryption:
+    aescbc:
+      activeKey:
+        name: cluster2-etcd-encryption-key
+    type: aescbc
+  services:
+  - service: APIServer
+    servicePublishingStrategy:
+      type: LoadBalancer
+  - service: Ignition
+    servicePublishingStrategy:
+      type: Route
+  - service: Konnectivity
+    servicePublishingStrategy:
+      type: Route
+  - service: OAuthServer
+    servicePublishingStrategy:
+      type: Route
+  sshKey:
+    name: cluster2-ssh-key
+status:
+  controlPlaneEndpoint:
+    host: ""
+    port: 0
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: cluster2
+  namespace: clusters
+spec:
+  arch: amd64
+  clusterName: cluster2
+  management:
+    autoRepair: false
+    upgradeType: Replace
+  nodeDrainTimeout: 0s
+  nodeVolumeDetachTimeout: 0s
+  platform:
+    kubevirt:
+      attachDefaultNetwork: true
+      compute:
+        cores: 2
+        memory: 8Gi
+      networkInterfaceMultiqueue: Enable
+      rootVolume:
+        persistent:
+          size: 32Gi
+        type: Persistent
+    type: KubeVirt
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.20.18-multi
+  replicas: 2
+status:
+  replicas: 0
+---

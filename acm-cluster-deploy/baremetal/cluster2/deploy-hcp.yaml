@@ -1,0 +1,107 @@
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  name: 'cluster2'
+  namespace: 'cluster2'
+  labels:
+spec:
+  channel: fast-4.21
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.21.18-multi
+  pullSecret:
+    name: pullsecret-cluster-cluster2
+  sshKey:
+    name: sshkey-cluster-cluster2
+  networking:
+    clusterNetwork:
+      - cidr: 10.132.0.0/14
+    serviceNetwork:
+      - cidr: 172.31.0.0/16
+    networkType: OVNKubernetes
+  configuration:
+    proxy:
+      httpProxy: 'http://192.168.50.1:3128'
+      httpsProxy: 'http://192.168.50.1:3128'
+      noProxy: '.cluster.local,.ocp4.pharriso.co.uk,.svc,10.128.0.0/14,127.0.0.1,172.30.0.0/16,192.168.50.0/24,api-int.ocp4.pharriso.co.uk,localhost'
+  controllerAvailabilityPolicy: SingleReplica
+  infrastructureAvailabilityPolicy: SingleReplica
+  olmCatalogPlacement: guest
+  platform:
+    type: Agent
+    agent:
+      agentNamespace: 'baremetal'
+  infraID: 'cluster2'
+  dns:
+    baseDomain: 'pharriso.co.uk'
+  services:
+  - service: APIServer
+    servicePublishingStrategy:
+      type: NodePort
+      nodePort:
+        address: api.cluster2.pharriso.co.uk
+        port: 31051
+  - service: OAuthServer
+    servicePublishingStrategy:
+      type: Route
+  - service: OIDC
+    servicePublishingStrategy:
+      type: Route
+  - service: Konnectivity
+    servicePublishingStrategy:
+      type: Route
+  - service: Ignition
+    servicePublishingStrategy:
+      type: Route
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pullsecret-cluster-cluster2
+  namespace: cluster2
+data:
+  '.dockerconfigjson': 
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sshkey-cluster-cluster2
+  namespace: 'cluster2'
+stringData:
+  id_rsa.pub: 
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: 'nodepool-cluster2-1'
+  namespace: 'cluster2'
+spec:
+  clusterName: 'cluster2'
+  replicas: 1
+  management:
+    autoRepair: false
+    upgradeType: InPlace
+  platform:
+    type: Agent
+    agent:
+      agentLabelSelector:
+        matchLabels: {}
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.21.18-multi
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  annotations:
+    import.open-cluster-management.io/hosting-cluster-name: local-cluster 
+    import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
+    open-cluster-management/created-via: hypershift
+  labels:
+    cloud: BareMetal
+    vendor: OpenShift
+    name: 'cluster2'
+  name: 'cluster2'
+spec:
+  hubAcceptsClient: true
+---

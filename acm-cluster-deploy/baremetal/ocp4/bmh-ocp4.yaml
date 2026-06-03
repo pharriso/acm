@@ -14,7 +14,7 @@ spec:
   automatedCleaningMode: disabled
   bmc:
     address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/fa211b26-e5bb-4604-a011-ec287d8ed7db
-    credentialsName: bmc-nodes
+    credentialsName: redfish-secret
     disableCertificateVerification: true
   bootMACAddress: 52:54:00:c9:e9:10
   rootDeviceHints:
@@ -37,7 +37,7 @@ spec:
   automatedCleaningMode: disabled
   bmc:
     address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/1fa24281-3a5b-483a-bb20-f5ad97b9db96
-    credentialsName: bmc-nodes
+    credentialsName: redfish-secret
     disableCertificateVerification: true
   bootMACAddress: 52:54:00:c9:e9:11
   rootDeviceHints:
@@ -60,7 +60,7 @@ spec:
   automatedCleaningMode: disabled
   bmc:
     address: redfish-virtualmedia+http://192.168.50.1:8000/redfish/v1/Systems/f4f209ed-781e-4682-ac7a-edd5169cce6b
-    credentialsName: bmc-nodes
+    credentialsName: redfish-secret
     disableCertificateVerification: true
   bootMACAddress: 52:54:00:c9:e9:12
   rootDeviceHints:

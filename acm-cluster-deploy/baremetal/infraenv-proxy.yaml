@@ -1,0 +1,50 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: pullsecret-baremetal
+  namespace: baremetal
+data:
+  '.dockerconfigjson': ''
+type: 'kubernetes.io/dockerconfigjson'
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: baremetal
+  namespace: baremetal
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: swad
+    networkType: static
+spec:
+  agentLabels:
+    'agentclusterinstalls.extensions.hive.openshift.io/location': swad
+  pullSecretRef:
+    name: pullsecret-baremetal
+  sshAuthorizedKey: 
+  additionalNTPSources:
+    - 192.168.50.1
+  nmStateConfigLabelSelector:	
+      matchLabels:	
+        infraenvs.agent-install.openshift.io: baremetal
+  proxy:
+    httpProxy: http://192.168.50.1:3128
+    httpsProxy: http://192.168.50.1:3128
+    noProxy: '.cluster.local,.ocp4.pharriso.co.uk,.svc,10.128.0.0/14,127.0.0.1,172.30.0.0/16,192.168.50.0/24,api-int.ocp4.pharriso.co.uk,localhost'
+  cpuArchitecture: x86_64
+status:
+  agentLabelSelector:
+    matchLabels:
+      'agentclusterinstalls.extensions.hive.openshift.io/location': swad
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: capi-provider-role
+  namespace: baremetal
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - agent-install.openshift.io
+    resources:
+      - agents

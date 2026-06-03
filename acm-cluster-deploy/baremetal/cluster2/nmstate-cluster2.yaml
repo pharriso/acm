@@ -1,0 +1,36 @@
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: node1-nmstate
+  labels:
+    agent-install.openshift.io/bmh: node1
+    infraenvs.agent-install.openshift.io: baremetal
+    nmstate-label: baremetal
+  namespace: baremetal
+spec:
+  config:
+    dns-resolver:
+      config:
+        server:
+        - 192.168.50.1
+    interfaces:
+    - ipv4:
+        address:
+        - ip: 192.168.50.175
+          prefix-length: 24
+        dhcp: false
+        enabled: true
+      mac-address: 52:54:00:0d:e2:1c
+      name: enp1s0
+      state: up
+      type: ethernet
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 192.168.50.1
+        next-hop-interface: enp1s0
+        table-id: 254
+  interfaces:
+  - macAddress: 52:54:00:0d:e2:1c
+    name: enp1s0
