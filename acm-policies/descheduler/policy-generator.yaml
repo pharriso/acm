@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: descheduler-policy
+policyDefaults:
+  namespace: default
+  severity: high
+  remediationAction: enforce
+  complianceType: musthave
+policies:
+  - name: descheduler-policy
+    manifests:
+      - path: manifests

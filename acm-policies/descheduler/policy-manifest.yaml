@@ -1,0 +1,92 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+    annotations:
+        policy.open-cluster-management.io/categories: CM Configuration Management
+        policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+        policy.open-cluster-management.io/description: ""
+        policy.open-cluster-management.io/standards: NIST SP 800-53
+    name: descheduler-policy
+    namespace: default
+spec:
+    disabled: false
+    policy-templates:
+        - objectDefinition:
+            apiVersion: policy.open-cluster-management.io/v1
+            kind: ConfigurationPolicy
+            metadata:
+                name: descheduler-policy
+            spec:
+                object-templates:
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: v1
+                        kind: Namespace
+                        metadata:
+                            annotations:
+                                argocd.argoproj.io/sync-wave: "0"
+                                openshift.io/node-selector: ""
+                            labels:
+                                openshift.io/cluster-monitoring: "true"
+                            name: openshift-kube-descheduler-operator
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1
+                        kind: OperatorGroup
+                        metadata:
+                            annotations:
+                                argocd.argoproj.io/sync-wave: "4"
+                            name: descheduler-operatorgroup
+                            namespace: openshift-kube-descheduler-operator
+                        spec:
+                            targetNamespaces:
+                                - openshift-kube-descheduler-operator
+                    - complianceType: musthave
+                      objectDefinition:
+                        apiVersion: operators.coreos.com/v1alpha1
+                        kind: Subscription
+                        metadata:
+                            annotations:
+                                argocd.argoproj.io/sync-wave: "5"
+                            name: descheduler-operator
+                            namespace: openshift-kube-descheduler-operator
+                        spec:
+                            channel: stable
+                            installPlanApproval: Automatic
+                            name: cluster-kube-descheduler-operator
+                            source: redhat-operators
+                            sourceNamespace: openshift-marketplace
+                remediationAction: enforce
+                severity: high
+    remediationAction: enforce
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+    name: placement-descheduler-policy
+    namespace: default
+spec:
+    predicates:
+        - requiredClusterSelector:
+            labelSelector:
+                matchExpressions: []
+    tolerations:
+        - key: cluster.open-cluster-management.io/unavailable
+          operator: Exists
+        - key: cluster.open-cluster-management.io/unreachable
+          operator: Exists
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+    name: binding-descheduler-policy
+    namespace: default
+placementRef:
+    apiGroup: cluster.open-cluster-management.io
+    kind: Placement
+    name: placement-descheduler-policy
+subjects:
+    - apiGroup: policy.open-cluster-management.io
+      kind: Policy
+      name: descheduler-policy
