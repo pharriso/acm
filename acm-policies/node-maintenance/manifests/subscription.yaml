@@ -1,0 +1,13 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: node-maintenance-operator
+  namespace: openshift-workload-availability 
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: node-maintenance-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace

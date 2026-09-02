@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: node-maintenance-operator
+policyDefaults:
+  namespace: default
+  severity: high
+  remediationAction: enforce
+  complianceType: musthave
+policies:
+  - name: node-maintenance-operator-policy
+    manifests:
+      - path: manifests

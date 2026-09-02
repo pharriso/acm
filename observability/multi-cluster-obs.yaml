@@ -15,7 +15,7 @@ spec:
     storageClass: lvms-vg1
     alertmanagerStorageSize: 1Gi
     compactStorageSize: 1Gi
-    receiveStorageSize: 1Gi
+    receiveStorageSize: 3Gi
     ruleStorageSize: 1Gi
     storeStorageSize: 1Gi
   advanced:
